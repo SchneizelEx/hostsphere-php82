@@ -1,4 +1,10 @@
 <?php
+    session_start();
+
+    if(isset($_SESSION["userId"]))
+    {
+        header('Location: index.php');
+    }
 
     if(isset($_POST["username"]) && isset($_POST["password"]))
     {
@@ -16,7 +22,10 @@
 
         if($result->num_rows > 0)
         {
-            header('Location: index.html');
+            foreach ($result as $row) {
+                $_SESSION["userId"] = $row["Id"];
+            }
+            header('Location: index.php');
         }
         else
         {
